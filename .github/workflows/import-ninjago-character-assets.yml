@@ -1,0 +1,47 @@
+name: Import Ninjago 3D characters
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/import-ninjago-character-assets.yml
+      - scripts/ninjago/publish-character-models.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout this TRELLIS fork
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Checkout Ninjago game source (pinned)
+        uses: actions/checkout@v4
+        with:
+          repository: yousseffekryk98-droid/LEGO-Ninjago-Tournament
+          ref: 8df1afecf58fd96a1329b1a7874112c21347c6ee
+          path: source-game
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rebuild original, authored game models
+        working-directory: source-game
+        run: npm run generate:assets
+      - name: Validate and copy character assets
+        run: node scripts/ninjago/publish-character-models.mjs source-game
+      - name: Publish model GLBs to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f assets/ninjago/characters/
+          if git diff --cached --quiet; then
+            echo "3D assets are already current."
+          else
+            git commit -m "assets: publish 10 playable Ninjago character GLBs"
+            git push origin HEAD:main
+          fi
