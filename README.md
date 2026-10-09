@@ -2,6 +2,9 @@
 
 # Native and Compact Structured Latents for 3D Generation
 
+> **Ninjago character models in this fork:** [10 playable GLB files](assets/ninjago/characters/) (Kai, Jay, Cole, Lloyd, Zane, Nya, Skylor, Chen, and Garmadon) with [asset manifest](assets/ninjago/characters/manifest.json). These are original authored/procedural fan-game models, **not TRELLIS.2-generated assets or official LEGO models**. The [import workflow](.github/workflows/import-ninjago-character-assets.yml) regenerates and validates them.
+
+
 <a href="https://arxiv.org/abs/2512.14692"><img src="https://img.shields.io/badge/Paper-Arxiv-b31b1b.svg" alt="Paper"></a>
 <a href="https://huggingface.co/microsoft/TRELLIS.2-4B"><img src="https://img.shields.io/badge/Hugging%20Face-Model-yellow" alt="Hugging Face"></a>
 <a href="https://huggingface.co/spaces/microsoft/TRELLIS.2"><img src="https://img.shields.io/badge/Hugging%20Face-Demo-blueviolet"></a>
